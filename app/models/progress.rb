@@ -14,4 +14,15 @@ class Progress < ApplicationRecord
     end
     self.sequence = next_sequence
   end
+
+  def positive_answer?
+    # 回答ははい
+    answer == 'positive'
+  end
+
+  def negative_answer?
+    # 回答はいいえ
+    answer == 'negative'
+  end
+
 end

@@ -14,16 +14,31 @@ class ProgressesController < ApplicationController
     progress.assign_sequence
     progress.save!
 
-    next_question = Question.next_question(current_game)
-    # 質問が出尽くしたらギブアップ
-    if next_question.blank?
-
-      current_game.status = 'finished'
-      current_game.result = 'incorrect'
-      current_game.save!
-
+    @extract_comics = ExtractionAlgorithm.new(current_game).compute
+    # 絞り込み結果が0件の場合、ギブアップ画面へ遷移
+    if @extract_comics.count == 0
       redirect_to give_up_game_path(current_game)
       return
+    end
+    # 絞り込み結果が1件の場合、チャレンジ(正解を当てにいく)へ遷移
+    if @extract_comics.count == 1
+      redirect_to challenge_game_path(current_game)
+      return
+    end
+
+    # 絞り込み結果が2件以上ある場合は次の質問へ遷移
+    if @extract_comics.count >= 2
+      next_question = Question.next_question(current_game)
+      # 質問が出尽くしたらギブアップ
+      if next_question.blank?
+
+        current_game.status = 'finished'
+        current_game.result = 'incorrect'
+        current_game.save!
+
+        redirect_to give_up_game_path(current_game)
+        return
+      end
     end
 
     redirect_to new_game_progresses_path(current_game)
