@@ -5,7 +5,7 @@ class GamesController < ApplicationController
 
   def create
     # ゲームを始めるときはin_progress
-    Game.create!(status: 'in_progress')
-    render plain: "game started! Let's start next section."
+    game = Game.create!(status: 'in_progress')
+    redirect_to new_game_progresses_path(game)
   end
 end
