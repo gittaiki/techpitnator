@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   has_many :progresses
 
+  # 引数(game)はcurrent_gameのこと
   def self.next_question(game)
     answered_question_ids = game.progresses.pluck(:question_id)
     # 出題していない質問をランダムで1つ取得

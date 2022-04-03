@@ -8,10 +8,11 @@ class Progress < ApplicationRecord
       # ユーザーが何問目か取得
       all_progress = game.progresses
       if all_progress.count > 0
-        # 質問回答数を1追加する
+        # 一番大きい出題回数+1
         next_sequence = all_progress.maximum(:sequence) + 1
       end
     end
+    # メソッドを呼び出したインスタンスの出題回数を更新
     self.sequence = next_sequence
   end
 

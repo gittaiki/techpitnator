@@ -1,8 +1,7 @@
 class ExtractionAlgorithm
   # インスタンス変数の読み取り専用のメソッド
-  attr_reader :game
-  attr_reader :query
-
+  attr_reader :game, :query
+  # 引数(game)はcurrent_gameのこと
   def initialize(game)
     Rails.logger.debug('ExtractionAlgorithm initialized.')
     @game = game
