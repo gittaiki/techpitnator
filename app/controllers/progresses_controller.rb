@@ -13,7 +13,7 @@ class ProgressesController < ApplicationController
     # sequenceカラムを挿入
     progress.assign_sequence
     progress.save!
-
+    # 絞り込んだコミックを取得
     @extract_comics = ExtractionAlgorithm.new(current_game).compute
     # 絞り込み結果が0件の場合、ギブアップ画面へ遷移
     if @extract_comics.count == 0
